@@ -1,0 +1,18 @@
+# Python related
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+*.egg
+*.python-version
+# Pipenv & virtual environment related
+.env
+Pipfile.lock
+
+# IDE related (e.g., VS Code)
+.vscode/
+*.code-workspace
+
+# Other files/directories you might want to ignore
+.env
+*.json
