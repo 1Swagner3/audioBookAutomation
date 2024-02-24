@@ -37,6 +37,7 @@ async def get_improved_text(context_data):
         "presence_penalty": 0
     }
     
+    print("Calling OpenAI API...")
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload, headers=headers) as response:
             if response.status == 200:
