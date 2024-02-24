@@ -4,7 +4,10 @@ from urllib.parse import urlparse
 
 
 def file_saver(input_file_path, input, mode):
-    print("Saving file...")
+    print("""
+          -----------------------------------------------------
+          Saving file...
+          """)
     
     base_name = extract_file_name(input_file_path, mode)
     chapter_number = base_name[7:9]
@@ -22,7 +25,10 @@ def file_saver(input_file_path, input, mode):
         with open(output_file_path, FILE_UTILS.get_write_mode(mode)) as out:
             out.write(input)
     
-    print(f"{FILE_UTILS.get_description_text(mode)} file saved to to {output_file_path}")
+    print(f"""
+          {FILE_UTILS.get_description_text(mode)} file saved to to {output_file_path}
+          -----------------------------------------------------
+          """)
     return output_file_path
 
 def extract_file_name(file_path, mode):
