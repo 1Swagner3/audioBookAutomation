@@ -2,7 +2,7 @@ import os
 import aiohttp
 from dotenv import load_dotenv
 
-async def get_improved_text(context_data):
+async def get_improved_text(index, context_data):
     load_dotenv()
     openai_api_key = os.environ.get("OPENAI_KEY")
 
@@ -37,7 +37,7 @@ async def get_improved_text(context_data):
         "presence_penalty": 0
     }
     
-    print("Calling OpenAI API...")
+    print(f"Calling OpenAI API for chunk {index}...")
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload, headers=headers) as response:
             if response.status == 200:

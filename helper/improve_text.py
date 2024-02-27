@@ -17,7 +17,7 @@ async def improve_text(file_path):
 
     # Create a list of coroutine objects for each text chunk
     print("Generate task list...")
-    tasks = [get_improved_text(chunk) for chunk in text_chunks]
+    tasks = [get_improved_text(index, chunk) for index, chunk in enumerate(text_chunks)]
 
     # Process all tasks concurrently and wait for all to complete
     print("Process tasks...")

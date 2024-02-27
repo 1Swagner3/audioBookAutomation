@@ -1,4 +1,4 @@
-phraseHints = [
+phrase_hints = [
     "Serasskulus", 
     "Saphira", 
     "Elf-Elb", 

@@ -1,19 +1,25 @@
+import re
+
 def split_text(text, max_length=1500):
+    # Use a regular expression to split text at sentence boundaries
+    sentences = re.split(r'(?<=[.!?])\s+', text)
     chunks = []
     current_chunk = ''
 
-    for word in text.split():
-        if len(current_chunk) + len(word) < max_length:
-            current_chunk += word + ' '
+    for sentence in sentences:
+        # Check if adding the sentence would exceed the max length
+        if len(current_chunk + sentence) <= max_length:
+            current_chunk += sentence + ' '
         else:
-            # Add the current chunk to the chunks list
-            chunks.append(current_chunk)
-            # Start a new chunk with the current word
-            current_chunk = word + ' '
+            # If the current chunk is too long, start a new chunk
+            if current_chunk:
+                chunks.append(current_chunk.strip())
+            current_chunk = sentence + ' '
 
-    # Add the last chunk if it's not empty
     if current_chunk:
-        chunks.append(current_chunk)
+        chunks.append(current_chunk.strip())
 
-    print("Chunks generated...", str(len(chunks)))
+    print("Chunks generated:", len(chunks))
     return chunks
+
+

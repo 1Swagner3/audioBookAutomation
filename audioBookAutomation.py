@@ -8,13 +8,14 @@ from helper.improve_text import improve_text
 def main():
     
     # Get user input
-    user_input = input("Please enter a google cloud storage: ")
+    #user_input = input("Please enter a google cloud storage: ")
     
     # Read audio file
-    transcribed_text_file_path = transcribe_audio(user_input)
+    #transcribed_text_file_path = transcribe_audio(user_input)
 
     # Process text
-    #improved_text_file_path = asyncio.run(improve_text(transcribed_text_file_path))
+    transcribed_text_file_path = 'Output_Audio_to_Text/Chapter01_transcript.txt'
+    improved_text_file_path = asyncio.run(improve_text(transcribed_text_file_path))
     # Convert processed text to speech
     #speech_file = long_text_to_speech(improved_text_file_path)
 
