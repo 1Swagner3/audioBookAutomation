@@ -1,10 +1,9 @@
 import asyncio
-from helper.file_modes import MODE
-from helper.file_saver import file_saver
-from helper.split_text import split_text
-from helper.combine_text_chunks import combine_chunks
-from Api_Calls.chat_gpt import get_improved_text
-import os
+from utils.file_modes import MODE
+from utils.file_saver import file_saver
+from utils.split_text import split_text
+from utils.combine_text_chunks import combine_chunks
+from Api_Calls.chat_gpt_improve_text import get_improved_text
 
 async def improve_text(file_path):
     

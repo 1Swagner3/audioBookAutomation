@@ -1,6 +1,9 @@
-from helper.file_modes import MODE, FILE_UTILS
+from io import BytesIO
+import requests
+from utils.file_modes import MODE, FILE_UTILS
 import os
 from urllib.parse import urlparse
+from PIL import Image
 
 
 def file_saver(input_file_path, input, mode):
@@ -21,6 +24,15 @@ def file_saver(input_file_path, input, mode):
             for result in input.results:
                 transcript = result.alternatives[0].transcript
                 text_file.write(transcript + "\n")
+    elif mode == MODE.TEXT_TO_SPEECH:
+        # Exporting the AudioSegment object to a file
+        input.export(output_file_path, format=FILE_UTILS.get_file_type(mode))
+    elif mode == MODE.IMAGE:
+        # Handle image saving
+        image_url = input
+        image_response = requests.get(image_url)
+        image = Image.open(BytesIO(image_response.content))
+        image.save(output_file_path)
     else:
         with open(output_file_path, FILE_UTILS.get_write_mode(mode)) as out:
             out.write(input)

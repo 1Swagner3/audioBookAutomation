@@ -1,9 +1,9 @@
 import threading
 import time
 from google.cloud import speech, storage
-from helper.file_modes import MODE
-from helper.file_saver import file_saver
-from helper.spinning_cursor import spinning_cursor
+from utils.file_modes import MODE
+from utils.file_saver import file_saver
+from utils.spinning_cursor import spinning_cursor
 from phraseHints import phrase_hints
 
 def transcribe_audio(gcs_uri):

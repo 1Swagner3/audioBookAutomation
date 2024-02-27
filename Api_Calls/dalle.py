@@ -1,40 +1,59 @@
-import openai
+import threading
+from openai import OpenAI
 import requests
 from PIL import Image
 from io import BytesIO
 import os
 from dotenv import load_dotenv
+from Api_Calls.chat_gpt_generate_dalle_prompt import generate_dalle_prompt
+from utils.file_modes import MODE
+from utils.file_saver import file_saver
+from utils.spinning_cursor import spinning_cursor
 
-def generate_and_save_image(prompt, output_folder, file_name):
+from utils.split_text import split_text
+
+def generate_image(input_file_path):
+    
+    print("Start generating image...")
+
+    # Read the text from the input file
+    with open(input_file_path, 'r', encoding='utf-8') as file:
+        text = file.read()
+
+    text_chunks = split_text(text)
+    
+    prompt = generate_dalle_prompt(text_chunks[0])
+    
     # Set OpenAI API key
     load_dotenv()
-    openai.api_key = os.environ.get("OPENAI_KEY")
+    client = OpenAI(api_key=os.environ.get("OPENAI_KEY"))
+    
+    # Create a threading event to control the spinner
+    stop_event = threading.Event()
 
-    # Generate an image using DALL-E
-    response = openai.Image.create(
-        prompt=prompt,
-        n=1,  # Number of images to generate
-        size="1024x1024"  # Image size
-    )
+    # Start the spinner thread
+    spinner_thread = threading.Thread(target=spinning_cursor, args=(stop_event,))
+    print("Generating image ... ")
+    spinner_thread.start()
+
+    try:
+        # Generate an image using DALL-E
+        response = client.images.generate(
+            model="dall-e-3", 
+            prompt=prompt,
+            quality="standard",
+            n=1, 
+            size="1792x1024"
+        )
+    finally:
+        # Stop the spinner once the response is received
+        stop_event.set()
+        spinner_thread.join()
+
 
     # Get the image URL from the response
-    image_url = response['data'][0]['url']
+    image_url = response.data[0].url
 
-    # Download the image
-    image_response = requests.get(image_url)
-    image = Image.open(BytesIO(image_response.content))
-
-    # Create the output folder if it doesn't exist
-    os.makedirs(output_folder, exist_ok=True)
-    output_file_path = os.path.join(output_folder, file_name)
-
-    # Save the image
-    image.save(output_file_path)
+    output_file_path = file_saver(input_file_path, image_url, MODE.IMAGE)
 
     print(f"Image saved to {output_file_path}")
-
-# Example usage
-prompt = "A futuristic cityscape"
-output_folder = "path/to/output/folder"
-file_name = "futuristic_cityscape.png"
-generate_and_save_image(prompt, output_folder, file_name)
