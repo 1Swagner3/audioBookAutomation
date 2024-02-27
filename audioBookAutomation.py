@@ -14,9 +14,9 @@ def main():
     transcribed_text_file_path = transcribe_audio(user_input)
 
     # Process text
-    improved_text_file_path = asyncio.run(improve_text(transcribed_text_file_path))
+    #improved_text_file_path = asyncio.run(improve_text(transcribed_text_file_path))
     # Convert processed text to speech
-    speech_file = long_text_to_speech(improved_text_file_path)
+    #speech_file = long_text_to_speech(improved_text_file_path)
 
     # Generate image
     #image_file = generate_image('image prompt')

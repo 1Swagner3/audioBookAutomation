@@ -1,9 +1,8 @@
 import time
 from google.cloud import speech, storage
-import os
 from helper.file_modes import MODE
-
 from helper.file_saver import file_saver
+from phraseHints import phraseHints
 
 def transcribe_audio(gcs_uri, language_code="de-DE"):
     
@@ -24,8 +23,12 @@ def transcribe_audio(gcs_uri, language_code="de-DE"):
     audio = speech.RecognitionAudio(uri=gcs_uri)
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.MP3,
-        sample_rate_hertz=16000,
+        sample_rate_hertz=44100,
         language_code=language_code,
+        enable_automatic_punctuation=True,
+        use_enhanced=True,
+        model='latest_long',
+        speech_contexts=[speech.SpeechContext(phrases=phraseHints)]
     )
 
     # Asynchronously transcribe the audio file
