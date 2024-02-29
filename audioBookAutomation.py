@@ -1,5 +1,6 @@
 import asyncio
-from Api_Calls.transcibe_audio import transcribe_audio
+from Api_Calls.assembli_ai_transscription import transcribe_assembly_ai
+from helper.replace_wrong_names import replace_wrong_words
 from helper.text_to_speech import text_to_speech
 from helper.improve_text import improve_text
 from Api_Calls.dalle import generate_image
@@ -8,17 +9,20 @@ from Api_Calls.dalle import generate_image
 def main():
     
     # Get user input
-    #user_input = input("Please enter a google cloud storage: ")
+    #user_input = input("Please enter a local audio file path: ")
     
     # Read audio file
-    #transcribed_text_file_path = transcribe_audio(user_input)
+    #transcribed_text_file_path = transcribe_assembly_ai(user_input)
+    
+    transcribed_text_file_path ="Output_Audio_to_Text/Chapter01_transcript.txt"
+    corrected_text_file_path = replace_wrong_words(transcribed_text_file_path)
 
     # Process text
     #improved_text_file_path = asyncio.run(improve_text(transcribed_text_file_path))
     
-    improved_text_file_path = "Output_Improved_Text/Chapter01_improved.txt"
+    #improved_text_file_path = "Output_Improved_Text/Chapter01_improved.txt"
     # Convert processed text to speech
-    text_to_speech(improved_text_file_path)
+    #text_to_speech(improved_text_file_path)
 
     # Generate image
     #generate_image(improved_text_file_path)
