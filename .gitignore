@@ -16,3 +16,6 @@ Pipfile.lock
 # Other files/directories you might want to ignore
 .env
 *.json
+*.txt
+*.mp3
+*.png

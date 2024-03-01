@@ -16,7 +16,7 @@ class FILE_UTILS:
             MODE.IMPROVE_TEXT: "Out/Improved_Text",
             MODE.TRANSCRIPTION: "Out/Transcription",
             MODE.IMAGE: "Out/Picture", 
-            MODE.CORRECTED: "Output_Corrected_Text"
+            MODE.CORRECTED: "Out/Corrected_Text"
         }
         return folders.get(mode, None)
 

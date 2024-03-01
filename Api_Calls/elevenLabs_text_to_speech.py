@@ -4,7 +4,10 @@ import requests
 from pydub import AudioSegment
 import io
 
-def elevenLabs_text_to_speech(text):
+def elevenLabs_text_to_speech(text, index):
+    
+    print(f"Calling Elevenlabs API for Chunk: {index} ")
+    
     load_dotenv()
     api_key = os.getenv("ELEVENLABS_API_KEY")
 
@@ -30,6 +33,7 @@ def elevenLabs_text_to_speech(text):
     # Return the audio data as an AudioSegment object
     if response.ok:
         audio_data = io.BytesIO(response.content)
+        print(f"Success in text-to-speech conversion of chunk {index} ")
         return AudioSegment.from_file(audio_data, format="mp3")
     else:
-        raise Exception(f"Error in text-to-speech conversion: {response.status_code}, {response.text}")
+        raise Exception(f"Error in text-to-speech conversion of chunk {index}: {response.status_code}, {response.text}")
