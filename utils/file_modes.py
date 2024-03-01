@@ -12,10 +12,10 @@ class FILE_UTILS:
     @staticmethod
     def get_output_folder(mode):
         folders = {
-            MODE.TEXT_TO_SPEECH: "Output_Text_to_Speech",
-            MODE.IMPROVE_TEXT: "Output_Improved_Text",
-            MODE.TRANSCRIPTION: "Output_Audio_to_Text",
-            MODE.IMAGE: "Output_Picture", 
+            MODE.TEXT_TO_SPEECH: "Out/Text_to_Speech",
+            MODE.IMPROVE_TEXT: "Out/Improved_Text",
+            MODE.TRANSCRIPTION: "Out/Transcription",
+            MODE.IMAGE: "Out/Picture", 
             MODE.CORRECTED: "Output_Corrected_Text"
         }
         return folders.get(mode, None)

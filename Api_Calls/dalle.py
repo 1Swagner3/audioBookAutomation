@@ -1,5 +1,7 @@
 import threading
+import time
 from openai import OpenAI
+import openai
 import requests
 from PIL import Image
 from io import BytesIO
@@ -36,24 +38,31 @@ def generate_image(input_file_path):
     print("Generating image ... ")
     spinner_thread.start()
 
-    try:
-        # Generate an image using DALL-E
-        response = client.images.generate(
-            model="dall-e-3", 
-            prompt=prompt,
-            quality="standard",
-            n=1, 
-            size="1792x1024"
-        )
-    finally:
-        # Stop the spinner once the response is received
-        stop_event.set()
-        spinner_thread.join()
-
-
-    # Get the image URL from the response
-    image_url = response.data[0].url
-
-    output_file_path = file_saver(input_file_path, image_url, MODE.IMAGE)
-
-    print(f"Image saved to {output_file_path}")
+    retry_attempts = 2
+    for attempt in range(retry_attempts):
+        try:
+            print(f"Querying with DALL-E prompt: {prompt}")
+            # Generate an image using DALL-E
+            response = client.images.generate(
+                model="dall-e-3", 
+                prompt=prompt,
+                quality="standard",
+                n=1, 
+                size="1792x1024"
+            )
+            image_url = response.data[0].url
+            image_output_path = file_saver(input_file_path, image_url, MODE.IMAGE)
+        except openai.OpenAIError as e:
+            if 'content_policy_violation' in str(e):
+                print(f"Attempt {attempt + 1} failed due to content policy violation. Retrying...")
+                time.sleep(1)  # Short pause before retrying
+                if attempt == retry_attempts - 1:
+                    print(f"Prompt failed after {retry_attempts} attempts due to policy violation. Here is your prompt for manual revision:\n{prompt}")
+            else:
+                raise  # Re-raise the exception if it's not a content policy violation
+        finally:
+            # Stop the spinner once the response is received or an exception is caught
+            stop_event.set()
+            spinner_thread.join()
+            return image_output_path
+        

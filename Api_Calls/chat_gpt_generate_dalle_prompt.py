@@ -22,7 +22,7 @@ def generate_dalle_prompt(text_chunk):
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": f"Summarize the following text for a DALL-E image prompt, keeping in mind it's for a dark fantasy novel: {text_chunk} Also make sure not to violate open ai's content safety policy."}
+                {"role": "user", "content": f"Based on the following text generate a dalle prompt for a youtube thumbnail: {text_chunk} Also make sure not to violate open ai's content safety policy."}
             ]
         )
 
