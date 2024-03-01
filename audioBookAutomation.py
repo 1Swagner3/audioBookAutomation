@@ -25,7 +25,7 @@ def main():
     improved_text_file_path = asyncio.run(improve_text(corrected_text_file_path))
     
     # Convert processed text to speech
-    text_to_speech("Out/Improved_Text/Chapter01_improved.txt")
+    text_to_speech(improved_text_file_path)
 
     # Generate image
     generate_image(improved_text_file_path)
