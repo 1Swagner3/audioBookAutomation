@@ -11,8 +11,16 @@ def main():
     # Get user input
     user_input = input("Please enter a local audio file path: ")
     
+    # Get user input for the chapter number
+    chapter_number = input("Please enter the chapter number: ")
+
+    # Validate chapter number input (optional, but recommended)
+    if not chapter_number.isdigit():
+        print("Error: Chapter number should be numeric.")
+        return
+    
     # Read audio file
-    transcribed_text_file_path = transcribe_assembly_ai(user_input)
+    transcribed_text_file_path = transcribe_assembly_ai(input_file_path=user_input, chapter_number=chapter_number)
     
     input("""
           Please review the transcribed file for any words that should be added to the replacement dictionary. 

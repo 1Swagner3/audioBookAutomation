@@ -6,7 +6,7 @@ from utils.file_modes import MODE
 from utils.file_saver import file_saver
 from utils.spinning_cursor import spinning_cursor
 
-def transcribe_assembly_ai(gcs_uri):
+def transcribe_assembly_ai(input_file_path, chapter_number):
     
     load_dotenv()
     api_key = os.environ.get("ASSEMBLI_AI_API_KEY")
@@ -34,7 +34,7 @@ def transcribe_assembly_ai(gcs_uri):
 
         # Start the transcription process
         transcript = transcriber.transcribe(
-            data=gcs_uri, 
+            data=input_file_path, 
             config=config
             )
         
@@ -52,5 +52,5 @@ def transcribe_assembly_ai(gcs_uri):
         stop_event.set()
         spinner_thread.join()
         
-    output_file_path = file_saver("gs://audio_file_storage_v2/Chapter01-Read.mp3", transcript_text, MODE.TRANSCRIPTION)
+    output_file_path = file_saver("gs://audio_file_storage_v2/Chapter01-Read.mp3", transcript_text, MODE.TRANSCRIPTION, chapter_number)
     return output_file_path
