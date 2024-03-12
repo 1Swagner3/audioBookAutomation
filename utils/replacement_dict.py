@@ -11,7 +11,10 @@ replacement_dict = {
         "Seraskelos",
         "Seraskolus", 
         "Zeraskulus", 
-        "Zeraskulos"
+        "Zeraskulos", 
+        "Saraskalos", 
+        "Saraskolas", 
+        "Seraskelus"
         ], 
     "Elf-Elb":["Elfelp", "Elf-Elf"], 
     "Saphira":["Zaphira", "Zephira", "Safira", "Zafira"], 
